@@ -1,103 +1,107 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Suspense } from "react";
+import { CamNodeListItem } from "./components/CamNodeListView";
+import { getAllNodes } from "@/ports";
+
+// export const experimental_ppr = true
+export const revalidate = 0;
+
+async function NodesListView() {
+  const nodes = await getAllNodes(true)
+
+  // if (nodes.length == 0) redirect("/nodes/create")
+
+  return (
+    <div className="flex flex-col flex-1 mt-2 gap-2">
+      {nodes.map((node) => (
+        <CamNodeListItem node={node} key={node.name} />
+      ))}
+      
+      {/* <div className="bg-blue-50 py-2 px-6 rounded-lg flex flex-row items-center gap-4">
+        <div className="flex-1">Node B</div>
+        <Link href={"/nodes/n2"} className="material-symbols-rounded !text-lg p-1 px-2 rounded-md hover:bg-blue-100">edit</Link>
+        <div className="material-symbols-rounded !text-lg">arrow_forward_ios</div>
+      </div>
+      <div className="bg-blue-50 py-2 px-6 rounded-lg flex flex-row items-center gap-4">
+        <div className="flex-1">Node C</div>
+        <Link href={"/nodes/n3"} className="material-symbols-rounded !text-lg p-1 px-2 rounded-md hover:bg-blue-100">edit</Link>
+        <div className="material-symbols-rounded !text-lg">arrow_forward_ios</div>
+      </div>
+      <div className="bg-blue-50 py-2 px-6 rounded-lg flex flex-row items-center gap-4">
+        <div className="flex-1">Node D</div>
+        <Link href={"/nodes/n4"} className="material-symbols-rounded !text-lg p-1 px-2 rounded-md hover:bg-blue-100">edit</Link>
+        <div className="material-symbols-rounded !text-lg">arrow_forward_ios</div>
+      </div>
+      <div className="bg-blue-50 py-2 px-6 rounded-lg flex flex-row items-center gap-4">
+        <div className="flex-1">Node E</div>
+        <Link href={"/nodes/n5"} className="material-symbols-rounded !text-lg p-1 px-2 rounded-md hover:bg-blue-100">edit</Link>
+        <div className="material-symbols-rounded !text-lg">arrow_forward_ios</div>
+      </div>
+      <div className="bg-blue-50 py-2 px-6 rounded-lg flex flex-row items-center gap-4">
+        <div className="flex-1">Node F</div>
+        <Link href={"/nodes/n6"} className="material-symbols-rounded !text-lg p-1 px-2 rounded-md hover:bg-blue-100">edit</Link>
+        <div className="material-symbols-rounded !text-lg">arrow_forward_ios</div>
+      </div> */}
+    </div>
+  )
+}
+
+function NodesListViewSkel() {
+  return (
+    <div className="flex flex-col flex-1 mt-2 gap-2 select-none animate-pulse">
+      <div className="bg-blue-50 py-2 px-6 rounded-lg flex flex-row items-center gap-4">
+        <div className="flex-1">
+          <div className="h-4 w-48 rounded bg-blue-100"/>
+        </div>
+        {/* <div className="material-symbols-rounded !text-lg p-1 px-2">edit</div> */}
+        <div className="material-symbols-rounded !text-lg py-1">arrow_forward_ios</div>
+      </div>
+      <div className="bg-blue-50 py-2 px-6 rounded-lg flex flex-row items-center gap-4">
+        <div className="flex-1">
+          <div className="h-4 w-48 rounded bg-blue-100"/>
+        </div>
+        {/* <div className="material-symbols-rounded !text-lg p-1 px-2">edit</div> */}
+        <div className="material-symbols-rounded !text-lg py-1">arrow_forward_ios</div>
+      </div>
+      <div className="bg-blue-50 py-2 px-6 rounded-lg flex flex-row items-center gap-4">
+        <div className="flex-1">
+          <div className="h-4 w-48 rounded bg-blue-100"/>
+        </div>
+        {/* <div className="material-symbols-rounded !text-lg p-1 px-2">edit</div> */}
+        <div className="material-symbols-rounded !text-lg py-1">arrow_forward_ios</div>
+      </div>
+      <div className="bg-blue-50 py-2 px-6 rounded-lg flex flex-row items-center gap-4">
+        <div className="flex-1">
+          <div className="h-4 w-48 rounded bg-blue-100"/>
+        </div>
+        {/* <div className="material-symbols-rounded !text-lg p-1 px-2">edit</div> */}
+        <div className="material-symbols-rounded !text-lg py-1">arrow_forward_ios</div>
+      </div>
+    </div>
+  )
+}
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="flex flex-col items-center justify-center bg-blue-100 min-h-screen">
+      <div className="min-h-[540px] w-[960px] rounded-2xl bg-white shadow-2xl flex flex-col px-8 py-4">
+        <div className="flex-1 flex flex-col gap-4">
+          <div className="text-[64px] font-bold text-black text-center mt-4 italic">Hello</div>
+          <div className="flex flex-row gap-4 flex-1">
+            <div className="flex flex-col flex-1 justify-center">
+              <div className="!text-[230px] text-center material-symbols-rounded">photo_camera</div>
+            </div>
+            <Suspense fallback={<NodesListViewSkel />}>
+              <NodesListView />
+            </Suspense>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+        <div className="flex flex-row my-8 min-h-13 gap-4 pl-4 pr-1.5 py-1.5 bg-blue-50 rounded-lg">
+          <div className="text-sm flex-1 self-center">Create new nodes if more nodes are required</div>
+          <Link href={"/nodes/create"} className="text-nowrap bg-white py-1 px-6 flex items-center rounded-md">Add Nodes</Link>
+        </div>
+        <div className="text-wrap text-center text-sm text-neutral-500">Camera Client for Pro-Active Crowd Flow Prediction</div>
+      </div>
     </div>
   );
 }
