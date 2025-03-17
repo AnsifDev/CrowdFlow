@@ -42,7 +42,7 @@ export async function getAllNodes(lite: boolean = false) {
     return nodes
 }
 
-export async function getNode(id: string, lite: boolean = false): Promise<WithStringId<AggCamNode> | WithStringId<CamNode>> {
+export async function getNode(id: string, lite: boolean = false): Promise<WithStringId<AggCamNode> | WithStringId<CamNode> | null> {
     const agg = [
         {
             '$match': { '_id': id }
@@ -81,12 +81,12 @@ export async function getNode(id: string, lite: boolean = false): Promise<WithSt
     if (lite) {
         const node = await nodesCollection.findOne({ _id: id })
 
-        if (node == null) throw new Error("Resource not found", { cause: `There is no node found with id: ${id}` })
+        if (node == null) return null
         return node
     } else {
         const result = await nodesCollection.aggregate<WithStringId<AggCamNode>>(agg).toArray()
 
-        if (result.length != 1) throw new Error("Resource not found", { cause: `There is no node found with id: ${id}` })
+        if (result.length != 1) return null
         return result[0]
     }
 }

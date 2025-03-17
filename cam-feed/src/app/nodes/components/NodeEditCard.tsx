@@ -97,14 +97,14 @@ export function NodeEditCard({ node = undefined }: { node?: WithStringId<AggCamN
   }, [])
 
   return (
-    <div className="min-h-[540px] w-[960px] rounded-2xl bg-white shadow-2xl flex flex-col px-8 py-4 relative">
+    <div className="md:min-h-[540px] lg:w-[960px] md:w-[720px] w-full md:flex-none md:h-auto flex-1 md:rounded-2xl bg-white shadow-2xl flex flex-col sm:px-8 px-4 sm:py-4 py-2 relative">
       <div className="flex-1 flex flex-col gap-4">
-        <div className="text-[40px] font-bold text-black text-center mt-8 mb-4 italic">{node == undefined? "Create New Node": `Edit ${node.name}`}</div>
-        <div className="flex flex-row gap-4 flex-1">
-          <div className="flex flex-col flex-1 justify-center">
-            <div className="!text-[230px] text-center material-symbols-rounded">add_a_photo</div>
+        <div className="md:text-[40px] text-[28px] font-bold text-black text-center sm:mt-4 mt-16 italic sticky top-6 z-20">{node == undefined? "Create New Node": `Edit Node`}</div>
+        <div className="flex sm:flex-row flex-col gap-4 flex-1">
+          <div className="flex flex-col sm:flex-1 justify-center mt-4">
+            <div className="md:!text-[230px] sm:!text-[180px] !text-[150px] text-center material-symbols-rounded">add_a_photo</div>
           </div>
-          <div className="flex flex-col flex-1 gap-4 pt-8">
+          <div className="flex flex-col flex-1 sm:gap-4 gap-3 sm:pt-8 pt-4">
             <div className="flex flex-col gap-1">
               <div className="text-xs text-neutral-500 ml-1">Set Node Name</div>
               <input value={name} onChange={(e) => setName(e.target.value)} className="outline-none bg-blue-50 rounded-md px-2 py-1"/>
@@ -136,7 +136,7 @@ export function NodeEditCard({ node = undefined }: { node?: WithStringId<AggCamN
           </div>
         </div>
       </div>
-      { (node == undefined) && (<div className="flex flex-row mt-8 gap-4 pl-4 pr-1.5 py-1.5 bg-blue-50 rounded-lg">
+      { (node == undefined) && (<div className="flex md:flex-row flex-col sm:mt-8 mt-4 gap-4 sm:pl-4 sm:pr-1.5 p-2 sm:py-1.5 bg-blue-50 rounded-lg">
         <div className="text-sm">By continuing, you are accepting that this newly created node can be used as a camera node so any client can connect on behalf of this node and can supply data to the pro active crowd flow management network</div>
         <button onClick={() => {
           if (name.length == 0) return;
@@ -180,7 +180,7 @@ export function NodeEditCard({ node = undefined }: { node?: WithStringId<AggCamN
         }} className="text-nowrap bg-white py-1 px-6 rounded-md">Agree & Create</button>
       </div>)}
       <div className="text-wrap text-center text-sm text-neutral-500 mt-4">Camera Client for Pro-Active Crowd Flow Prediction</div>
-      <div className="flex absolute top-7 left-5 gap-2">
+      <div className="flex fixed z-10 md:absolute pt-7 top-0 left-0 pl-5 pr-6 right-0 pb-2 gap-2 bg-white sm:bg-transparent">
         <button onClick={() => router.back()} className="material-symbols-rounded p-2 rounded-md hover:bg-blue-50">arrow_back_ios_new</button>
         {(node != undefined) && (<button onClick={() => {
           // fetch(`/api/nodes/${node._id}`, { method: 'DELETE' }).then(() => {
@@ -195,45 +195,49 @@ export function NodeEditCard({ node = undefined }: { node?: WithStringId<AggCamN
             router.refresh()
           })
         }} className="material-symbols-rounded p-2 rounded-md text-red-500 hover:bg-red-50">delete</button>)}
+
+        <div className="flex-1" />
+
+        {(node != undefined) && (<button onClick={() => {
+          editNode({
+            _id: node._id,
+            name: name,
+            capacity: capacity,
+            type: type
+          }).then(() => {
+            updateAdjacents(adjacent.map((adj) => ({
+              distance: adj.distance,
+              target: adj.target._id,
+              from: node._id
+            })))
+          }).then(() => {
+            router.back()
+            router.refresh()
+            // router.push("/")
+          })
+          // fetch(`/api/nodes/${node._id}`, {
+          //   method: "POST",
+          //   headers: {
+          //     "Content-Type": "application/json"
+          //   },
+          //   body: JSON.stringify({
+          //     name: name,
+          //     capacity: capacity,
+          //     type: type
+          //   })
+          // }).then((resp) => resp.json()).then((insertedNode: WithId<CamNode>) => {
+          //   fetch(`/api/nodes/${insertedNode._id.toString()}/adjs`, {
+          //     method: "POST",
+          //     headers: {
+          //       "Content-Type": "application/json"
+          //     },
+          //     body: JSON.stringify(adjacent)
+          //   })
+          // }).then(() => router.push("http://localhost:3000/")) 
+        }} className="py-2 px-4 rounded-md bg-blue-50">Save Node</button>)}
       </div>
       
-      {(node != undefined) && (<button onClick={() => {
-        editNode({
-          _id: node._id,
-          name: name,
-          capacity: capacity,
-          type: type
-        }).then(() => {
-          updateAdjacents(adjacent.map((adj) => ({
-            distance: adj.distance,
-            target: adj.target._id,
-            from: node._id
-          })))
-        }).then(() => {
-          router.back()
-          router.refresh()
-          // router.push("/")
-        })
-        // fetch(`/api/nodes/${node._id}`, {
-        //   method: "POST",
-        //   headers: {
-        //     "Content-Type": "application/json"
-        //   },
-        //   body: JSON.stringify({
-        //     name: name,
-        //     capacity: capacity,
-        //     type: type
-        //   })
-        // }).then((resp) => resp.json()).then((insertedNode: WithId<CamNode>) => {
-        //   fetch(`/api/nodes/${insertedNode._id.toString()}/adjs`, {
-        //     method: "POST",
-        //     headers: {
-        //       "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringify(adjacent)
-        //   })
-        // }).then(() => router.push("http://localhost:3000/")) 
-      }} className="absolute top-8 right-6 py-2 px-4 rounded-md bg-blue-50">Save Node</button>)}
+      
     </div>
   );
 }

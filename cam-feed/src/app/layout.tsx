@@ -14,10 +14,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?display=swap&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add,add_a_photo,arrow_back_ios_new,arrow_forward_ios,close,delete,edit,map,photo_camera" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?display=swap&family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add,add_a_photo,arrow_back_ios_new,arrow_forward_ios,cameraswitch,close,delete,edit,map,photo_camera" />
       </head>
       
-      <body>
+      <body className="md:bg-blue-50 bg-white">
         {children}
       </body>
     </html>

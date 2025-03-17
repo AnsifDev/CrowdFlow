@@ -9,13 +9,13 @@ type PageParams = {
 
 export default async function Page({ params }: { params: Promise<PageParams> }) {
   const { id } = await params
-  try {
-    const node = await getNode(id) as WithStringId<AggCamNode>
 
-    return (
-      <div className="flex flex-col items-center justify-center bg-blue-100 min-h-screen">
-        <NodeEditCard node={node}/>
-      </div>
-    )
-  } catch { notFound() }
+  const node = await getNode(id) as WithStringId<AggCamNode> | null
+  if (node == null) notFound()
+
+  return (
+    <div className="flex flex-col items-center justify-center bg-blue-100 min-h-screen">
+      <NodeEditCard node={node}/>
+    </div>
+  )
 }
