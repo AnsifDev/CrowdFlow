@@ -99,7 +99,7 @@ export function NodeEditCard({ node = undefined }: { node?: WithStringId<AggCamN
   return (
     <div className="md:min-h-[540px] lg:w-[960px] md:w-[720px] w-full md:flex-none md:h-auto flex-1 md:rounded-2xl bg-white shadow-2xl flex flex-col sm:px-8 px-4 sm:py-4 py-2 relative">
       <div className="flex-1 flex flex-col gap-4">
-        <div className="md:text-[40px] text-[28px] font-bold text-black text-center sm:mt-4 mt-16 italic sticky top-6 z-20">{node == undefined? "Create New Node": `Edit Node`}</div>
+        <div className="md:text-[40px] text-[28px] font-bold text-black self-center sm:mt-4 mt-16 italic sticky top-6 z-20">{node == undefined? "Create New Node": `Edit Node`}</div>
         <div className="flex sm:flex-row flex-col gap-4 flex-1">
           <div className="flex flex-col sm:flex-1 justify-center mt-4">
             <div className="md:!text-[230px] sm:!text-[180px] !text-[150px] text-center material-symbols-rounded">add_a_photo</div>
