@@ -37,9 +37,9 @@ export function NodeCardItem({ data, updation }: { data: CamNodeData, updation?:
             </div>
             <div className="flex-1 overflow-hidden flex flex-col py-1 justify-center">
                 <div className="text-nowrap truncate">{data.name}</div>
-                <div className={`text-sm font-bold ${getStyle(data.status)?.text}`}>{data.status}</div>
+                <div className={`text-sm font-bold ${getStyle(updation?.[data._id]?.status ?? data.status)?.text}`}>{updation?.[data._id]?.status ?? data.status}</div>
             </div>
-            <div className="min-w-16 flex items-center justify-center text-xl font-bold">{(updation?.[data._id]?.count ?? data.count).toFixed(2)}</div>
+            <div className="min-w-16 flex items-center justify-center text-xl font-bold">{(updation?.[data._id]?.count ?? data.count).toFixed()}</div>
         </div>
     )
 }

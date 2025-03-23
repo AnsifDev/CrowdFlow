@@ -1,3 +1,4 @@
+import json
 from flask import Flask, Response, request, jsonify
 from flask_cors import CORS
 import db
@@ -27,6 +28,7 @@ def update_status(nid):
 # Home route
 @app.route('/')
 def home():
+    # a = 5/0
     return jsonify({
         'message': 'Welcome to the Flask Server!',
         'status': 'running'
@@ -37,9 +39,16 @@ def initialize():
     node_details = db.getNodes()
 
     for node in node_details:
-        node_data[node['_id']] = { **node_data[node['_id']], **node } if node['_id'] in node_data else { **node, 'count': 0, 'status': 'Safe' }
+        if node['_id'] not in node_data:
+            node_data[node['_id']] = { **node, 'count': 0, 'status': 'Safe' }
+        else:
+            node_data[node['_id']] = { **node_data[node['_id']], **node }
+        # node_data[node['_id']] = { **node_data[node['_id']], **node } if node['_id'] in node_data else { **node, 'count': 0, 'status': 'Safe' }
+    
+    # print(json.dumps(node_details, indent=4))
+    # print(json.dumps(node_data, indent=4))
 
-    return [ node_data[nid] for nid in node_data], 200
+    return [ node_data[nid] for nid in node_data ], 200
 
 @app.route('/log', methods=['GET'])
 def log():
@@ -79,6 +88,11 @@ def predict(nid):
             node_data[nid]['count'] = count
             node_data[nid]['status'] = update_status(nid)
 
+            for adj in node_data[nid]['adjacent']:
+                tid = adj['target']
+                target = node_data[tid]
+                target['status'] = update_status(tid)
+
         return Response(status=200)
 
     except Exception as e:
@@ -86,6 +100,16 @@ def predict(nid):
             'error': str(e),
             'status': 'failed'
         }), 500
+    
+@app.route('/updateSim/<string:nid>', methods=['POST'])
+def sim_update(nid):
+    data = request.json
+
+    if nid in node_data:
+        node_data[nid]['count'] = data['count']
+        node_data[nid]['status'] = update_status(nid)
+
+    return Response(status=200)
 
 # Error handling for 404 (Not Found)
 @app.errorhandler(404)

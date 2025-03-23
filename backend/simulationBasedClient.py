@@ -1,6 +1,8 @@
 import random, json
-from threading import Timer
+from threading import Thread, Timer
 from time import ctime, time as cu_time, sleep
+
+import requests
 
 graph = [
     [0, 5, 0, 12, 0, 0],
@@ -9,6 +11,15 @@ graph = [
     [12, 5, 6, 0, 0, 5],
     [0, 8, 0, 0, 0, 3],
     [0, 0, 7, 5, 3, 0]
+]
+
+ids = [
+    'n1',
+    'n2',
+    'n3',
+    'n4',
+    'n5',
+    'n6',
 ]
 
 decisions = ['stay', 'move', 'exit']
@@ -190,5 +201,25 @@ def on_update(nodes: list[Node]):
     
     print('\t\t\t', *status, sep='\t')
 
-simulator = Simulator(node_names, 180, 75, 180, 0.01, on_update_callback=on_update)
-simulator.run()
+simulator = Simulator(node_names, 180, 75, 180, 1, on_update_callback=on_update)
+Thread(target=simulator.run).start()
+
+URL = 'https://localhost:5000'
+
+resp = requests.post(f'{URL}/init')
+objs = resp.json()
+
+def thread_target(node: Node, id: str):
+    sleep(random.randint(0, 5))
+    while True:
+        try:
+            requests.post(f'{URL}/updateSim/{id}', json={ 'count': node.crowd_count })
+
+        except requests.RequestException as e:
+            print(f'Request Failed: {e}')
+            break
+            
+        sleep(10)
+
+for i in range(len(simulator.nodes)):
+    Thread(target=thread_target, args=[simulator.nodes[i], objs[i]['_id']]).start()
