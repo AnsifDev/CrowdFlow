@@ -1,5 +1,5 @@
 {
-  "name": "cam-feed",
+  "name": "crowd-flow-pred-client",
   "version": "0.1.0",
   "private": true,
   "scripts": {
