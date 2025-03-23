@@ -37,7 +37,7 @@ def initialize():
     node_details = db.getNodes()
 
     for node in node_details:
-        node_data[node['_id']] = { **node_data[node['_id']], **node } if node['_id'] in node_data else { **node, 'count': 0, 'status': 'safe' }
+        node_data[node['_id']] = { **node_data[node['_id']], **node } if node['_id'] in node_data else { **node, 'count': 0, 'status': 'Safe' }
 
     return [ node_data[nid] for nid in node_data], 200
 
@@ -101,5 +101,5 @@ if __name__ == '__main__':
         debug=True, 
         host='0.0.0.0', 
         port=5000, 
-        ssl_context=('/home/ansif/Port Projects/CamFeed/cam-feed/certificates/localhost.pem', '/home/ansif/Port Projects/CamFeed/cam-feed/certificates/localhost-key.pem')
+        ssl_context=('/home/ansif/Port Projects/CamFeed/web-client/certificates/localhost.pem', '/home/ansif/Port Projects/CamFeed/web-client/certificates/localhost-key.pem')
     )

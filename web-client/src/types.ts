@@ -27,3 +27,10 @@ export type WithStringId<TSchema> = Omit<TSchema, '_id'> & {
 export type AggCamNode = CamNode & {
     adjacent: AggAdjacent[],
 }
+
+export type UpdateData = {
+    status: 'Safe'|'Caution'|'Risk'|'Hi Risk'
+    count: number
+}
+
+export type CamNodeData = WithStringId<CamNode> & UpdateData
