@@ -3,7 +3,7 @@ import os
 from flask import Flask, Response, request, jsonify
 from flask_cors import CORS
 import db
-from model import predict_count
+# from model import predict_count
 
 # Initialize Flask app
 app = Flask(__name__)
