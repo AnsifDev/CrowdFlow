@@ -11,6 +11,7 @@ cycler==0.12.1
 debugpy==1.8.13
 decorator==5.2.1
 dnspython==2.7.0
+dotenv==0.9.9
 executing==2.2.0
 Flask==3.1.0
 flask-cors==5.0.1
@@ -70,6 +71,7 @@ Pygments==2.19.1
 pymongo==4.11.3
 pyparsing==3.2.1
 python-dateutil==2.9.0.post0
+python-dotenv==1.1.0
 pyzmq==26.3.0
 requests==2.32.3
 rich==13.9.4

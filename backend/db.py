@@ -1,7 +1,11 @@
+import os
 from pymongo import MongoClient
+import dotenv
+
+dotenv.load_dotenv('.env.local')
 
 # Initialize the MongoDB client
-client = MongoClient('mongodb+srv://admin:pass%40123@main.tleus.mongodb.net')
+client = MongoClient(os.getenv('MONGODB_URI'))
 
 # Access the 'Crowd' database
 db = client['Crowd']

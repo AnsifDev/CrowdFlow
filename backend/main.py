@@ -1,4 +1,5 @@
 import json
+import os
 from flask import Flask, Response, request, jsonify
 from flask_cors import CORS
 import db
@@ -124,6 +125,6 @@ if __name__ == '__main__':
     app.run(
         debug=True, 
         host='0.0.0.0', 
-        port=5000, 
-        ssl_context=('/home/ansif/Port Projects/CamFeed/web-client/certificates/localhost.pem', '/home/ansif/Port Projects/CamFeed/web-client/certificates/localhost-key.pem')
+        port=os.getenv('PORT') or 5000, 
+        # ssl_context=('/home/ansif/Port Projects/CamFeed/web-client/certificates/localhost.pem', '/home/ansif/Port Projects/CamFeed/web-client/certificates/localhost-key.pem')
     )

@@ -2,5 +2,6 @@
 
 temp.*
 logs
+.env*
 
 __pycache__
