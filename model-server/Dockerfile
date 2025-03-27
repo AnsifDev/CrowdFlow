@@ -15,4 +15,5 @@ ENV PORT=8501
 EXPOSE 8501
 
 # Start TensorFlow Serving
-ENTRYPOINT ["tensorflow_model_server", "--port=8501", "--rest_api_port=8501", "--model_name=${MODEL_NAME}", "--model_base_path=/models/${MODEL_NAME}"]
+# ENTRYPOINT ["tensorflow_model_server", "--port=8501", "--rest_api_port=${PORT}", "--model_name=$MODEL_NAME", "--model_base_path=/models/$MODEL_NAME"]
+CMD tensorflow_model_server --port=8500 --rest_api_port=${PORT} --model_name=${MODEL_NAME} --model_base_path=/models/${MODEL_NAME}
